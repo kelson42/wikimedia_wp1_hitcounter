@@ -8,7 +8,7 @@ use URI::Escape;
 
 foreach $file ( @ARGV ) { 
 #  open IN, "<:gzip", $file or die;
-  open IN, "/usr/bin/gunzip -c '$file'|" or die;
+  open IN, "/bin/gunzip -c '$file'|" or die;
 #  open IN, "/bin/zcat '$file'|" or die;
 
   $file =~ m/(\d+)/;
