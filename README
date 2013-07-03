@@ -2,29 +2,14 @@ Note: This requires a lot of disk space. The raw data uses about 1 GB
 per day of data, The output for 40 days of data takes about 16 GB. 
 
 1. Download the raw data
-	
-	cd source/
-	sh get.sh
+If you're running on Tool Labs, call link-month.sh with each year and month
+you want to index. This will create links in source/ for each of the files in
+that month.
 
-This will download the data that is on the server. Unfortunately, only
-one month is kept on the server, but you can accumulate more over time
-if you run get.sh again and again.  
+Otherwise, download the hourly pagecounts-*.gz files from
+http://dumps.wikimedia.org/other/pagecounts-raw/ (projectcounts aren't needed.)
 
-If you are running on toolserver, you can skip this step and simply
-make source/ a symbolic link to /mnt/user-store/stats/
-
-2. Convert the raw data (which is in hourly files) to daily files with
-
-	sh make-hourly.sh DATE
-
-where DATE is in YYYYMMDD form, e.g. 20080803. This has to be run
-one time for every date that you have downloaded in step 1. 
-
-On toolserver, the script make-monthly.sh can be used to automate this
-process. The make-monthly.sh script also uses the solaris load-balancing
-system to run as a "batch job". 
-
-3. Make the list of average daily hitcounts, which will be created
+2. Make the list of average daily hitcounts, which will be created
 in the file hitcounts.raw.gz. Run
 
-	sh make-merged.sh
+	sh make-raw.sh
