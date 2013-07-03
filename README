@@ -11,5 +11,10 @@ http://dumps.wikimedia.org/other/pagecounts-raw/ (projectcounts aren't needed.)
 
 2. Make the list of average daily hitcounts, which will be created
 in the file hitcounts.raw.gz. Run
-
 	sh make-raw.sh
+
+On Tool Labs, the grid engine should be used:
+	jsub -cwd -j y ./make-raw.sh
+This will send the output of the command to ~/make-raw.out ; you can monitor
+this file with
+	tail -f ~/make-raw.out
