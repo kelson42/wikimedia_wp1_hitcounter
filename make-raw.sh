@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e # Die if an error occurs
+
 LANG=C
 export LANG
 
@@ -13,9 +15,14 @@ export TMP
 				 awk 'BEGIN { FS="-" } { print $2 }' |
 				 uniq
 			); do
-		perl bin/phase1hz.pl source/pagecounts-$yearmonthday-* |
-		 sort -T$TMP  -k 3 -t " " |
-		 perl bin/tally.pl
+		if [ -e target/$yearmonthday.out.gz ]; then # File already processed
+			cat target/$yearmonthday.out.gz | gunzip
+		else
+			perl bin/phase1hz.pl source/pagecounts-$yearmonthday-* |
+			 sort -T$TMP  -k 3 -t " " |
+			 perl bin/tally.pl |
+			 tee >(gzip > target/$yearmonthday.out.gz) # Cache file
+		fi
 	done
 ) |
 # Do things to the aggregate (formerly make-merged.sh)
